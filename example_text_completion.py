@@ -5,6 +5,12 @@ import fire
 
 from llama import Llama
 
+# For Windows, using Gloo since NCCL didn't support
+import os 
+import torch
+os.environ['PL_TORCH_DISTRIBUTED_BACKEND'] = 'gloo'
+os.environ['NCCL_DEBUG'] = 'INFO'
+torch.distributed.init_process_group(backend="gloo")
 
 def main(
     ckpt_dir: str,
